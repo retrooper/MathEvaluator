@@ -1,7 +1,9 @@
+import io.github.retrooper.mathevaluator.MathExpression;
+
 public class Main {
 
     public static void main(String[] args) {
-        MathExpression expr = new MathExpression("1 + 1");
+        MathExpression expr = new MathExpression("(3 * 4) - (4 - 1) * 5 * 14591");
         //Compiles to java code, the compilation is what takes long.
         expr.prepare();
         long start = System.nanoTime();

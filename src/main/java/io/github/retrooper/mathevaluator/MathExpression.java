@@ -1,3 +1,5 @@
+package io.github.retrooper.mathevaluator;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
@@ -13,8 +15,18 @@ import java.nio.file.Files;
 public class MathExpression {
     private final String expression;
     private Method executeMethod;
+    private static File root;
+    private static File sourceFile;
+    private Class<?> cls;
 
     public MathExpression(String expression) {
+        if (root == null) {
+            root = new File("/java");
+        }
+        if (sourceFile == null) {
+            sourceFile = new File(root, "test/Test.java");
+            sourceFile.getParentFile().mkdirs();
+        }
         this.expression = expression;
     }
 
@@ -26,9 +38,6 @@ public class MathExpression {
                 " } " +
                 "}";
         // Save source in .java file.
-        File root = new File("/java"); // On Windows running on C:\, this is C:\java.
-        File sourceFile = new File(root, "test/Test.java");
-        sourceFile.getParentFile().mkdirs();
         try {
             Files.write(sourceFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
@@ -45,7 +54,6 @@ public class MathExpression {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Class<?> cls = null; // Should print "hello".
         try {
             cls = Class.forName("test.Test", true, classLoader);
         } catch (ClassNotFoundException e) {
@@ -61,7 +69,7 @@ public class MathExpression {
 
     public double execute() {
         try {
-            return (double)executeMethod.invoke(null);
+            return (double) executeMethod.invoke(null);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
