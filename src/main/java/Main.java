@@ -8,9 +8,11 @@ public class Main {
         expr.prepare();
         long start = System.nanoTime();
         //Executes compiled java code
-        System.out.println("1 + 1 = " + expr.execute());
+        System.out.println("Result: = " + expr.execute());
         System.out.println("Took: " + (System.nanoTime() - start) + " nanoseconds");
-        //On my system the execution took ~0ms(12495200 nanoseconds)
+        //On my system the execution took ~0ms(12495200 nanoseconds).
+
+        //Yes preparation might be a tiny bit slow(~30ms), but execution is very very fast.
     }
 
 }
